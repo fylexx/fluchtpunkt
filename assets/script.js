@@ -385,10 +385,28 @@ function drawVpHonest(srcRGBA, v, segs, thresh = 3.0, padFrac = 0.2, maxPadMult 
       d = [dx / n, dy / n];
     }
     const c0x = W / 2, c0y = H / 2, r = 0.45 * Math.min(W, H);
-    cv.arrowedLine(canvas,
+    drawArrow(canvas,
       new cv.Point(Math.round(c0x), Math.round(c0y)),
       new cv.Point(Math.round(c0x + d[0] * r), Math.round(c0y + d[1] * r)),
-      yellow, 5, cv.LINE_8, 0, 0.04);
+      yellow, 5, 0.04);
   }
   return canvas;
+}
+
+// cv.arrowedLine is not exposed in the prebuilt OpenCV.js — emulate it
+// with three cv.line calls (shaft + two head segments).
+function drawArrow(img, p1, p2, color, thickness, tipLength = 0.1) {
+  cv.line(img, p1, p2, color, thickness);
+  const dx = p2.x - p1.x, dy = p2.y - p1.y;
+  const len = Math.hypot(dx, dy);
+  if (len < 1) return;
+  const tip = len * tipLength;
+  const angle = Math.PI / 7;                  // arrowhead opening (~25°)
+  const back = Math.atan2(dy, dx) + Math.PI;  // direction pointing back from tip
+  const head = (sign) => new cv.Point(
+    Math.round(p2.x + tip * Math.cos(back + sign * angle)),
+    Math.round(p2.y + tip * Math.sin(back + sign * angle)),
+  );
+  cv.line(img, p2, head(+1), color, thickness);
+  cv.line(img, p2, head(-1), color, thickness);
 }
