@@ -90,37 +90,23 @@ nav .fa {
   display: none;
 }
 
-/* Mobile nav */
+/* Mobile nav: only the logo is shown — hamburger and links are hidden */
 @media (max-width: 700px) {
-  nav .fa {
-    display: block;
-    color: #000;
-    margin: 10px;
-    font-size: 22px;
-    cursor: pointer;
+  nav .fa,
+  #nav-links-sub {
+    display: none;
   }
   .sticky-bg {
     backdrop-filter: none;
+  }
+  .nav-links {
+    justify-content: center;
+    padding: 2% 4%;   
   }
   .nav-links .hero-link {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .nav-links ul li {
-    display: block;
-    text-align: left;
-    padding: 5px 50px;
-  }
-  #nav-links-sub {
-    position: absolute;
-    left: -200px;
-    margin-top: 70px;
-    height: 100vh;
-    width: 30%;
-    text-align: right;
-    backdrop-filter: blur(0px);
-    transition: 1s;
   }
 }
 
@@ -236,6 +222,7 @@ nav .fa {
 @media (max-width: 700px) {
   #title-one { font-size: 32px; }
   #button-one { font-size: 16px; padding: 12px 24px; }
+  #title-one  { font-size: 26px; }
 }
 
 /* ---------- About Us ---------- */
@@ -298,6 +285,8 @@ mark {
   .about-us-row {
     flex-direction: column;
   }
+  #about-us h3 { font-size: 22px; }
+  #about-us p  { font-size: 16px; }
 }
 
 /* ---------- Footer ---------- */
